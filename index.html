@@ -4,7 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#090b0b" />
-  <meta name="description" content="AI speaking practice: random prompts, recording, fluency metrics and Gemini-powered feedback." />
+  <meta name="description" content="SpeakSharp: 1000-question AI speaking practice with free-style recording and detailed grading." />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="SpeakSharp" />
   <title>SpeakSharp</title>
   <style>
 :root{
@@ -13,10 +17,10 @@
   --safeTop:env(safe-area-inset-top,0px);--safeBottom:env(safe-area-inset-bottom,0px)
 }
 *{box-sizing:border-box}html{background:var(--bg);color-scheme:dark}body{margin:0;min-width:320px;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}body:not(.results-open){overflow:hidden}
-button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,select:focus-visible,audio:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.hidden{display:none!important}
+button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,select:focus-visible,audio:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.hidden{display:none!important}.install-only{display:none}
 .app-shell{width:min(100%,980px);margin:0 auto}.practice-screen{height:100dvh;min-height:520px;padding:calc(8px + var(--safeTop)) 12px calc(8px + var(--safeBottom));display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto;gap:8px;overflow:hidden}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:38px}.brand{display:flex;align-items:baseline;gap:8px;min-width:0}.brand-mark{font-size:12px;font-weight:950;letter-spacing:.14em;color:var(--accent)}.brand-name{font-size:20px;font-weight:850;letter-spacing:-.04em}.ghost-btn,.primary-btn{height:38px;border-radius:11px;padding:0 13px;font-weight:800;cursor:pointer}.ghost-btn{border:1px solid var(--line);background:transparent;color:var(--text)}.primary-btn{border:1px solid var(--accent);background:var(--accent);color:#021008}.ghost-btn:disabled,.primary-btn:disabled{opacity:.42;cursor:not-allowed}.compact{height:34px;padding:0 10px;font-size:12px}
-.mode-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.mode-card{height:42px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--muted);display:flex;align-items:center;justify-content:center;gap:5px;padding:0 5px;font-size:12px;font-weight:800;cursor:pointer;min-width:0}.mode-card.active{border-color:var(--accent);background:var(--accentSoft);color:var(--text)}.mode-icon{font-size:14px}.mode-long{display:none}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:38px}.brand{display:flex;align-items:baseline;gap:8px;min-width:0}.brand-mark{font-size:12px;font-weight:950;letter-spacing:.14em;color:var(--accent)}.brand-name{font-size:20px;font-weight:850;letter-spacing:-.04em}.top-actions{display:flex;align-items:center;gap:6px}.ghost-btn,.primary-btn{height:38px;border-radius:11px;padding:0 13px;font-weight:800;cursor:pointer}.ghost-btn{border:1px solid var(--line);background:transparent;color:var(--text)}.primary-btn{border:1px solid var(--accent);background:var(--accent);color:#021008}.ghost-btn:disabled,.primary-btn:disabled{opacity:.42;cursor:not-allowed}.compact{height:34px;padding:0 10px;font-size:12px}
+.mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.mode-card{height:42px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--muted);display:flex;align-items:center;justify-content:center;gap:5px;padding:0 5px;font-size:12px;font-weight:800;cursor:pointer;min-width:0}.mode-card.active{border-color:var(--accent);background:var(--accentSoft);color:var(--text)}.mode-icon{font-size:14px}.mode-long{display:none}
 .control-row{display:flex;align-items:center;gap:6px;min-width:0}.select-wrap{position:relative;min-width:0}.select-wrap label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}select{height:36px;border:1px solid var(--line);border-radius:10px;background:#0c0f0e;color:var(--text);padding:0 28px 0 10px;font-size:12px;font-weight:700}.grow{margin-left:auto}.new-prompt{height:36px;white-space:nowrap}
 .practice-core{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);padding:clamp(12px,2.4vw,20px);display:grid;grid-template-rows:auto minmax(0,1fr);min-height:0;overflow:hidden}.prompt-wrap{min-height:0;overflow:hidden}.prompt-meta{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:.14em}.prompt{font-size:clamp(22px,4.8vw,39px);line-height:1.12;font-weight:850;letter-spacing:-.035em;margin-top:6px;max-height:3.45em;overflow:hidden}.cue-list{margin-top:8px;color:#c5cec9;font-size:12px;line-height:1.35}.cue-list ul{margin:0;padding-left:18px;display:grid;grid-template-columns:1fr 1fr;gap:3px 20px}
 .speak-stage{min-height:0;display:flex;align-items:center;justify-content:center;gap:clamp(18px,5vw,54px);padding:8px 0 2px}.timer-wrap{text-align:center;min-width:86px}.timer{font-size:clamp(32px,7vw,52px);line-height:1;font-weight:900;letter-spacing:-.06em;font-variant-numeric:tabular-nums}.timer-label{font-size:9px;font-weight:900;letter-spacing:.16em;color:var(--muted);margin-top:6px}.record-btn{width:clamp(96px,22vw,132px);height:clamp(96px,22vw,132px);border-radius:50%;border:1px solid #314139;background:#0b0f0d;color:var(--text);display:grid;place-items:center;align-content:center;gap:7px;cursor:pointer}.record-btn.recording{border-color:var(--danger)}.record-dot{width:20px;height:20px;border-radius:50%;background:var(--accent)}.recording .record-dot{background:var(--danger);border-radius:5px}#recordBtnText{font-size:11px;font-weight:950;letter-spacing:.13em}.stage-note{max-width:210px;color:var(--muted);font-size:11px;line-height:1.35;margin:0}
@@ -37,12 +41,14 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     <section class="practice-screen" aria-label="Speaking practice">
       <header class="topbar">
         <div class="brand"><span class="brand-mark">SS</span><span class="brand-name">SpeakSharp</span></div>
-        <button id="apiKeyBtn" class="ghost-btn compact" type="button">API key</button>
+        <div class="top-actions">
+          <button id="installBtn" class="ghost-btn compact hidden" type="button">Install</button>
+          <button id="apiKeyBtn" class="ghost-btn compact" type="button">API key</button>
+        </div>
       </header>
 
       <nav class="mode-tabs" aria-label="Practice mode">
-        <button class="mode-card active" data-mode="instant" type="button"><span class="mode-icon">⚡</span><span>Instant</span></button>
-        <button class="mode-card" data-mode="random" type="button"><span class="mode-icon">🎲</span><span>Random</span></button>
+        <button class="mode-card active" data-mode="random" type="button"><span class="mode-icon">🎲</span><span>Random</span></button>
         <button class="mode-card" data-mode="ielts" type="button"><span class="mode-icon">🎓</span><span>IELTS</span></button>
         <button class="mode-card" data-mode="thought" type="button"><span class="mode-icon">🧠</span><span>Thought</span></button>
       </nav>
@@ -53,22 +59,30 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
           <select id="ieltsPart" aria-label="IELTS part"><option value="1">Part 1</option><option value="2">Part 2</option><option value="3">Part 3</option></select>
         </div>
         <div class="select-wrap">
-          <label for="timeLimit">Time limit</label>
-          <select id="timeLimit" aria-label="Time limit"><option value="30">30 sec</option><option value="60" selected>60 sec</option><option value="90">90 sec</option><option value="120">120 sec</option></select>
+          <label for="timeLimit">Timer</label>
+          <select id="timeLimit" aria-label="Timer">
+            <option value="free" selected>Free ↑</option>
+            <option value="30">30s ↓</option>
+            <option value="60">60s ↓</option>
+            <option value="90">90s ↓</option>
+            <option value="120">2m ↓</option>
+            <option value="180">3m ↓</option>
+            <option value="300">5m ↓</option>
+          </select>
         </div>
         <button id="randomBtn" class="ghost-btn new-prompt grow" type="button">↻ New question</button>
       </div>
 
       <section class="practice-core">
         <div class="prompt-wrap">
-          <div class="prompt-meta" id="promptMeta">INSTANT RESPONSE</div>
+          <div class="prompt-meta" id="promptMeta">RANDOM SPEAKING</div>
           <div class="prompt" id="promptText" aria-live="polite"></div>
           <div class="cue-list" id="cueList"></div>
         </div>
         <div class="speak-stage">
-          <div class="timer-wrap"><div id="timer" class="timer">01:00</div><div id="timerLabel" class="timer-label">READY</div></div>
+          <div class="timer-wrap"><div id="timer" class="timer">00:00</div><div id="timerLabel" class="timer-label">READY · FREE</div></div>
           <button id="recordBtn" class="record-btn" type="button" aria-label="Start recording"><span class="record-dot"></span><span id="recordBtnText">START</span></button>
-          <p class="stage-note" id="microcopy">Tap START. Instant mode reveals the question at GO.</p>
+          <p class="stage-note" id="microcopy">Free style counts up with no time limit. Describe/Talk about questions default to 2 minutes.</p>
         </div>
       </section>
 
@@ -109,203 +123,1832 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
   const $$ = (sel) => [...document.querySelectorAll(sel)];
   const HISTORY_KEY = 'speaksharp_history_v1';
   const API_KEY_KEY = 'speaksharp_gemini_api_key_v1';
-  const GEMINI_MODEL = 'gemini-3.7-flash';
+  const GEMINI_MODEL = 'gemini-3.5-flash';
   const MAX_HISTORY = 60;
   const WAV_SAMPLE_RATE = 16000;
-  const MAX_WAV_BYTES = 4_150_000;
+  const MAX_AUDIO_BYTES = 18_000_000;
 
   const BANKS = {
-    instant: [
-      'What is one thing you would change about your daily routine?',
-      'What makes someone easy to trust?',
-      'Should people always say exactly what they think?',
-      'What is something you learned later than you should have?',
-      'What makes a conversation interesting?',
-      'What is one habit that wastes people’s time?',
-      'Would you rather be highly skilled or highly confident?',
-      'What is one thing money cannot replace?',
-      'When is it better to stay silent?',
-      'What makes a person memorable?',
-      'What is one decision people often overthink?',
-      'Is being busy the same as being productive?',
-      'What is one small thing that can improve someone’s day?',
-      'What is more important: speed or accuracy?',
-      'What makes advice useful?',
-      'What is one sign that someone is a good listener?',
-      'What should people do when they realize they are wrong?',
-      'What is one skill every adult should have?',
-      'Is it better to plan carefully or adapt quickly?',
-      'What makes a workplace stressful?',
-      'What makes a person persuasive?',
-      'What is something people pretend not to care about?',
-      'What is one thing you do better now than five years ago?',
-      'What makes a goal realistic?',
-      'What is the quickest way to lose someone’s trust?',
-      'Should people answer messages immediately?',
-      'What makes someone a good leader?',
-      'What is one mistake that can teach a useful lesson?',
-      'When should you change your mind?',
-      'What is a good way to disagree without creating conflict?',
-      'What is one quality you respect in other people?',
-      'Is first impression usually reliable?',
-      'What is one thing that is harder than it looks?',
-      'What is a useful way to deal with pressure?',
-      'What makes a person sound confident?',
-      'What should you do if you do not know the answer?',
-      'What is one thing people should do less often?',
-      'What is one thing people should do more often?',
-      'What makes an apology believable?',
-      'What does “being successful” mean to you?'
-    ],
     random: [
-      'Describe a place where you can think clearly.',
-      'Talk about a purchase that was worth the money.',
-      'Describe a person who has influenced the way you think.',
-      'Talk about a skill you would like to master.',
-      'Describe a time when a plan changed unexpectedly.',
-      'What role does technology play in your everyday life?',
-      'How has the way people communicate changed in recent years?',
-      'Talk about a food that you could eat regularly without getting bored.',
-      'Describe a difficult decision you made.',
-      'What kind of environment helps you work best?',
-      'Talk about something you used to believe but no longer believe.',
-      'Describe a useful piece of advice you received.',
-      'What is a problem in your city that deserves more attention?',
-      'Talk about a time you had to learn something quickly.',
-      'Describe a person who communicates very well.',
-      'What makes travel enjoyable or stressful?',
-      'Talk about a routine that improves your life.',
-      'Describe a time when you helped someone solve a problem.',
-      'What makes a product feel high quality?',
-      'Talk about a memorable conversation you had.',
-      'Describe an experience that changed your priorities.',
-      'What kind of work do you find meaningful?',
-      'Talk about a time when you had to be patient.',
-      'Describe a useful app or website you use.',
-      'What makes a city a good place to live?',
-      'Talk about a time when you were under pressure.',
-      'Describe something you own that has sentimental value.',
-      'What are the advantages and disadvantages of working from home?',
-      'Talk about something you want to improve about yourself.',
-      'Describe a situation where you had to explain something clearly.',
-      'What makes people change their habits?',
-      'Talk about a time you were pleasantly surprised.',
-      'Describe a place you would like to visit again.',
-      'What is the value of learning a foreign language?',
-      'Talk about a time when you made a mistake and fixed it.',
-      'Describe a difficult conversation you handled well.',
-      'What makes a friendship last?',
-      'Talk about a goal you are currently working toward.',
-      'Describe a time when someone changed your opinion.',
-      'What is one social trend you find interesting?'
-    ],
+    "What do you think about daily routines?",
+    "How have changes in daily routines affected your life or the people around you?",
+    "Describe a memorable experience related to daily routines.",
+    "Talk about one thing you would change about daily routines.",
+    "What do people often misunderstand about daily routines?",
+    "What makes daily routines important?",
+    "What is one advantage and one disadvantage of daily routines?",
+    "How might daily routines change in the future?",
+    "Do you think people give enough attention to daily routines? Why or why not?",
+    "What is one useful lesson people can learn from daily routines?",
+    "What do you think about technology?",
+    "How have changes in technology affected your life or the people around you?",
+    "Describe a memorable experience related to technology.",
+    "Talk about one thing you would change about technology.",
+    "What do people often misunderstand about technology?",
+    "What makes technology important?",
+    "What is one advantage and one disadvantage of technology?",
+    "How might technology change in the future?",
+    "Do you think people give enough attention to technology? Why or why not?",
+    "What is one useful lesson people can learn from technology?",
+    "What do you think about social media?",
+    "How have changes in social media affected your life or the people around you?",
+    "Describe a memorable experience related to social media.",
+    "Talk about one thing you would change about social media.",
+    "What do people often misunderstand about social media?",
+    "What makes social media important?",
+    "What is one advantage and one disadvantage of social media?",
+    "How might social media change in the future?",
+    "Do you think people give enough attention to social media? Why or why not?",
+    "What is one useful lesson people can learn from social media?",
+    "What do you think about travel?",
+    "How have changes in travel affected your life or the people around you?",
+    "Describe a memorable experience related to travel.",
+    "Talk about one thing you would change about travel.",
+    "What do people often misunderstand about travel?",
+    "What makes travel important?",
+    "What is one advantage and one disadvantage of travel?",
+    "How might travel change in the future?",
+    "Do you think people give enough attention to travel? Why or why not?",
+    "What is one useful lesson people can learn from travel?",
+    "What do you think about public transport?",
+    "How have changes in public transport affected your life or the people around you?",
+    "Describe a memorable experience related to public transport.",
+    "Talk about one thing you would change about public transport.",
+    "What do people often misunderstand about public transport?",
+    "What makes public transport important?",
+    "What is one advantage and one disadvantage of public transport?",
+    "How might public transport change in the future?",
+    "Do you think people give enough attention to public transport? Why or why not?",
+    "What is one useful lesson people can learn from public transport?",
+    "What do you think about food and eating habits?",
+    "How have changes in food and eating habits affected your life or the people around you?",
+    "Describe a memorable experience related to food and eating habits.",
+    "Talk about one thing you would change about food and eating habits.",
+    "What do people often misunderstand about food and eating habits?",
+    "What makes food and eating habits important?",
+    "What is one advantage and one disadvantage of food and eating habits?",
+    "How might food and eating habits change in the future?",
+    "Do you think people give enough attention to food and eating habits? Why or why not?",
+    "What is one useful lesson people can learn from food and eating habits?",
+    "What do you think about fitness?",
+    "How have changes in fitness affected your life or the people around you?",
+    "Describe a memorable experience related to fitness.",
+    "Talk about one thing you would change about fitness.",
+    "What do people often misunderstand about fitness?",
+    "What makes fitness important?",
+    "What is one advantage and one disadvantage of fitness?",
+    "How might fitness change in the future?",
+    "Do you think people give enough attention to fitness? Why or why not?",
+    "What is one useful lesson people can learn from fitness?",
+    "What do you think about sleep?",
+    "How have changes in sleep affected your life or the people around you?",
+    "Describe a memorable experience related to sleep.",
+    "Talk about one thing you would change about sleep.",
+    "What do people often misunderstand about sleep?",
+    "What makes sleep important?",
+    "What is one advantage and one disadvantage of sleep?",
+    "How might sleep change in the future?",
+    "Do you think people give enough attention to sleep? Why or why not?",
+    "What is one useful lesson people can learn from sleep?",
+    "What do you think about money?",
+    "How have changes in money affected your life or the people around you?",
+    "Describe a memorable experience related to money.",
+    "Talk about one thing you would change about money.",
+    "What do people often misunderstand about money?",
+    "What makes money important?",
+    "What is one advantage and one disadvantage of money?",
+    "How might money change in the future?",
+    "Do you think people give enough attention to money? Why or why not?",
+    "What is one useful lesson people can learn from money?",
+    "What do you think about shopping?",
+    "How have changes in shopping affected your life or the people around you?",
+    "Describe a memorable experience related to shopping.",
+    "Talk about one thing you would change about shopping.",
+    "What do people often misunderstand about shopping?",
+    "What makes shopping important?",
+    "What is one advantage and one disadvantage of shopping?",
+    "How might shopping change in the future?",
+    "Do you think people give enough attention to shopping? Why or why not?",
+    "What is one useful lesson people can learn from shopping?",
+    "What do you think about friendships?",
+    "How have changes in friendships affected your life or the people around you?",
+    "Describe a memorable experience related to friendships.",
+    "Talk about one thing you would change about friendships.",
+    "What do people often misunderstand about friendships?",
+    "What makes friendships important?",
+    "What is one advantage and one disadvantage of friendships?",
+    "How might friendships change in the future?",
+    "Do you think people give enough attention to friendships? Why or why not?",
+    "What is one useful lesson people can learn from friendships?",
+    "What do you think about family life?",
+    "How have changes in family life affected your life or the people around you?",
+    "Describe a memorable experience related to family life.",
+    "Talk about one thing you would change about family life.",
+    "What do people often misunderstand about family life?",
+    "What makes family life important?",
+    "What is one advantage and one disadvantage of family life?",
+    "How might family life change in the future?",
+    "Do you think people give enough attention to family life? Why or why not?",
+    "What is one useful lesson people can learn from family life?",
+    "What do you think about work?",
+    "How have changes in work affected your life or the people around you?",
+    "Describe a memorable experience related to work.",
+    "Talk about one thing you would change about work.",
+    "What do people often misunderstand about work?",
+    "What makes work important?",
+    "What is one advantage and one disadvantage of work?",
+    "How might work change in the future?",
+    "Do you think people give enough attention to work? Why or why not?",
+    "What is one useful lesson people can learn from work?",
+    "What do you think about education?",
+    "How have changes in education affected your life or the people around you?",
+    "Describe a memorable experience related to education.",
+    "Talk about one thing you would change about education.",
+    "What do people often misunderstand about education?",
+    "What makes education important?",
+    "What is one advantage and one disadvantage of education?",
+    "How might education change in the future?",
+    "Do you think people give enough attention to education? Why or why not?",
+    "What is one useful lesson people can learn from education?",
+    "What do you think about language learning?",
+    "How have changes in language learning affected your life or the people around you?",
+    "Describe a memorable experience related to language learning.",
+    "Talk about one thing you would change about language learning.",
+    "What do people often misunderstand about language learning?",
+    "What makes language learning important?",
+    "What is one advantage and one disadvantage of language learning?",
+    "How might language learning change in the future?",
+    "Do you think people give enough attention to language learning? Why or why not?",
+    "What is one useful lesson people can learn from language learning?",
+    "What do you think about books and reading?",
+    "How have changes in books and reading affected your life or the people around you?",
+    "Describe a memorable experience related to books and reading.",
+    "Talk about one thing you would change about books and reading.",
+    "What do people often misunderstand about books and reading?",
+    "What makes books and reading important?",
+    "What is one advantage and one disadvantage of books and reading?",
+    "How might books and reading change in the future?",
+    "Do you think people give enough attention to books and reading? Why or why not?",
+    "What is one useful lesson people can learn from books and reading?",
+    "What do you think about music?",
+    "How have changes in music affected your life or the people around you?",
+    "Describe a memorable experience related to music.",
+    "Talk about one thing you would change about music.",
+    "What do people often misunderstand about music?",
+    "What makes music important?",
+    "What is one advantage and one disadvantage of music?",
+    "How might music change in the future?",
+    "Do you think people give enough attention to music? Why or why not?",
+    "What is one useful lesson people can learn from music?",
+    "What do you think about films?",
+    "How have changes in films affected your life or the people around you?",
+    "Describe a memorable experience related to films.",
+    "Talk about one thing you would change about films.",
+    "What do people often misunderstand about films?",
+    "What makes films important?",
+    "What is one advantage and one disadvantage of films?",
+    "How might films change in the future?",
+    "Do you think people give enough attention to films? Why or why not?",
+    "What is one useful lesson people can learn from films?",
+    "What do you think about photography?",
+    "How have changes in photography affected your life or the people around you?",
+    "Describe a memorable experience related to photography.",
+    "Talk about one thing you would change about photography.",
+    "What do people often misunderstand about photography?",
+    "What makes photography important?",
+    "What is one advantage and one disadvantage of photography?",
+    "How might photography change in the future?",
+    "Do you think people give enough attention to photography? Why or why not?",
+    "What is one useful lesson people can learn from photography?",
+    "What do you think about fashion?",
+    "How have changes in fashion affected your life or the people around you?",
+    "Describe a memorable experience related to fashion.",
+    "Talk about one thing you would change about fashion.",
+    "What do people often misunderstand about fashion?",
+    "What makes fashion important?",
+    "What is one advantage and one disadvantage of fashion?",
+    "How might fashion change in the future?",
+    "Do you think people give enough attention to fashion? Why or why not?",
+    "What is one useful lesson people can learn from fashion?",
+    "What do you think about weather?",
+    "How have changes in weather affected your life or the people around you?",
+    "Describe a memorable experience related to weather.",
+    "Talk about one thing you would change about weather.",
+    "What do people often misunderstand about weather?",
+    "What makes weather important?",
+    "What is one advantage and one disadvantage of weather?",
+    "How might weather change in the future?",
+    "Do you think people give enough attention to weather? Why or why not?",
+    "What is one useful lesson people can learn from weather?",
+    "What do you think about nature?",
+    "How have changes in nature affected your life or the people around you?",
+    "Describe a memorable experience related to nature.",
+    "Talk about one thing you would change about nature.",
+    "What do people often misunderstand about nature?",
+    "What makes nature important?",
+    "What is one advantage and one disadvantage of nature?",
+    "How might nature change in the future?",
+    "Do you think people give enough attention to nature? Why or why not?",
+    "What is one useful lesson people can learn from nature?",
+    "What do you think about city life?",
+    "How have changes in city life affected your life or the people around you?",
+    "Describe a memorable experience related to city life.",
+    "Talk about one thing you would change about city life.",
+    "What do people often misunderstand about city life?",
+    "What makes city life important?",
+    "What is one advantage and one disadvantage of city life?",
+    "How might city life change in the future?",
+    "Do you think people give enough attention to city life? Why or why not?",
+    "What is one useful lesson people can learn from city life?",
+    "What do you think about neighbourhoods?",
+    "How have changes in neighbourhoods affected your life or the people around you?",
+    "Describe a memorable experience related to neighbourhoods.",
+    "Talk about one thing you would change about neighbourhoods.",
+    "What do people often misunderstand about neighbourhoods?",
+    "What makes neighbourhoods important?",
+    "What is one advantage and one disadvantage of neighbourhoods?",
+    "How might neighbourhoods change in the future?",
+    "Do you think people give enough attention to neighbourhoods? Why or why not?",
+    "What is one useful lesson people can learn from neighbourhoods?",
+    "What do you think about housing?",
+    "How have changes in housing affected your life or the people around you?",
+    "Describe a memorable experience related to housing.",
+    "Talk about one thing you would change about housing.",
+    "What do people often misunderstand about housing?",
+    "What makes housing important?",
+    "What is one advantage and one disadvantage of housing?",
+    "How might housing change in the future?",
+    "Do you think people give enough attention to housing? Why or why not?",
+    "What is one useful lesson people can learn from housing?",
+    "What do you think about holidays?",
+    "How have changes in holidays affected your life or the people around you?",
+    "Describe a memorable experience related to holidays.",
+    "Talk about one thing you would change about holidays.",
+    "What do people often misunderstand about holidays?",
+    "What makes holidays important?",
+    "What is one advantage and one disadvantage of holidays?",
+    "How might holidays change in the future?",
+    "Do you think people give enough attention to holidays? Why or why not?",
+    "What is one useful lesson people can learn from holidays?",
+    "What do you think about customer service?",
+    "How have changes in customer service affected your life or the people around you?",
+    "Describe a memorable experience related to customer service.",
+    "Talk about one thing you would change about customer service.",
+    "What do people often misunderstand about customer service?",
+    "What makes customer service important?",
+    "What is one advantage and one disadvantage of customer service?",
+    "How might customer service change in the future?",
+    "Do you think people give enough attention to customer service? Why or why not?",
+    "What is one useful lesson people can learn from customer service?",
+    "What do you think about leadership?",
+    "How have changes in leadership affected your life or the people around you?",
+    "Describe a memorable experience related to leadership.",
+    "Talk about one thing you would change about leadership.",
+    "What do people often misunderstand about leadership?",
+    "What makes leadership important?",
+    "What is one advantage and one disadvantage of leadership?",
+    "How might leadership change in the future?",
+    "Do you think people give enough attention to leadership? Why or why not?",
+    "What is one useful lesson people can learn from leadership?",
+    "What do you think about teamwork?",
+    "How have changes in teamwork affected your life or the people around you?",
+    "Describe a memorable experience related to teamwork.",
+    "Talk about one thing you would change about teamwork.",
+    "What do people often misunderstand about teamwork?",
+    "What makes teamwork important?",
+    "What is one advantage and one disadvantage of teamwork?",
+    "How might teamwork change in the future?",
+    "Do you think people give enough attention to teamwork? Why or why not?",
+    "What is one useful lesson people can learn from teamwork?",
+    "What do you think about communication?",
+    "How have changes in communication affected your life or the people around you?",
+    "Describe a memorable experience related to communication.",
+    "Talk about one thing you would change about communication.",
+    "What do people often misunderstand about communication?",
+    "What makes communication important?",
+    "What is one advantage and one disadvantage of communication?",
+    "How might communication change in the future?",
+    "Do you think people give enough attention to communication? Why or why not?",
+    "What is one useful lesson people can learn from communication?",
+    "What do you think about decision-making?",
+    "How have changes in decision-making affected your life or the people around you?",
+    "Describe a memorable experience related to decision-making.",
+    "Talk about one thing you would change about decision-making.",
+    "What do people often misunderstand about decision-making?",
+    "What makes decision-making important?",
+    "What is one advantage and one disadvantage of decision-making?",
+    "How might decision-making change in the future?",
+    "Do you think people give enough attention to decision-making? Why or why not?",
+    "What is one useful lesson people can learn from decision-making?",
+    "What do you think about time management?",
+    "How have changes in time management affected your life or the people around you?",
+    "Describe a memorable experience related to time management.",
+    "Talk about one thing you would change about time management.",
+    "What do people often misunderstand about time management?",
+    "What makes time management important?",
+    "What is one advantage and one disadvantage of time management?",
+    "How might time management change in the future?",
+    "Do you think people give enough attention to time management? Why or why not?",
+    "What is one useful lesson people can learn from time management?",
+    "What do you think about productivity?",
+    "How have changes in productivity affected your life or the people around you?",
+    "Describe a memorable experience related to productivity.",
+    "Talk about one thing you would change about productivity.",
+    "What do people often misunderstand about productivity?",
+    "What makes productivity important?",
+    "What is one advantage and one disadvantage of productivity?",
+    "How might productivity change in the future?",
+    "Do you think people give enough attention to productivity? Why or why not?",
+    "What is one useful lesson people can learn from productivity?",
+    "What do you think about creativity?",
+    "How have changes in creativity affected your life or the people around you?",
+    "Describe a memorable experience related to creativity.",
+    "Talk about one thing you would change about creativity.",
+    "What do people often misunderstand about creativity?",
+    "What makes creativity important?",
+    "What is one advantage and one disadvantage of creativity?",
+    "How might creativity change in the future?",
+    "Do you think people give enough attention to creativity? Why or why not?",
+    "What is one useful lesson people can learn from creativity?",
+    "What do you think about stress?",
+    "How have changes in stress affected your life or the people around you?",
+    "Describe a memorable experience related to stress.",
+    "Talk about one thing you would change about stress.",
+    "What do people often misunderstand about stress?",
+    "What makes stress important?",
+    "What is one advantage and one disadvantage of stress?",
+    "How might stress change in the future?",
+    "Do you think people give enough attention to stress? Why or why not?",
+    "What is one useful lesson people can learn from stress?",
+    "What do you think about success?",
+    "How have changes in success affected your life or the people around you?",
+    "Describe a memorable experience related to success.",
+    "Talk about one thing you would change about success.",
+    "What do people often misunderstand about success?",
+    "What makes success important?",
+    "What is one advantage and one disadvantage of success?",
+    "How might success change in the future?",
+    "Do you think people give enough attention to success? Why or why not?",
+    "What is one useful lesson people can learn from success?",
+    "What do you think about failure?",
+    "How have changes in failure affected your life or the people around you?",
+    "Describe a memorable experience related to failure.",
+    "Talk about one thing you would change about failure.",
+    "What do people often misunderstand about failure?",
+    "What makes failure important?",
+    "What is one advantage and one disadvantage of failure?",
+    "How might failure change in the future?",
+    "Do you think people give enough attention to failure? Why or why not?",
+    "What is one useful lesson people can learn from failure?",
+    "What do you think about habits?",
+    "How have changes in habits affected your life or the people around you?",
+    "Describe a memorable experience related to habits.",
+    "Talk about one thing you would change about habits.",
+    "What do people often misunderstand about habits?",
+    "What makes habits important?",
+    "What is one advantage and one disadvantage of habits?",
+    "How might habits change in the future?",
+    "Do you think people give enough attention to habits? Why or why not?",
+    "What is one useful lesson people can learn from habits?",
+    "What do you think about health?",
+    "How have changes in health affected your life or the people around you?",
+    "Describe a memorable experience related to health.",
+    "Talk about one thing you would change about health.",
+    "What do people often misunderstand about health?",
+    "What makes health important?",
+    "What is one advantage and one disadvantage of health?",
+    "How might health change in the future?",
+    "Do you think people give enough attention to health? Why or why not?",
+    "What is one useful lesson people can learn from health?",
+    "What do you think about personal goals?",
+    "How have changes in personal goals affected your life or the people around you?",
+    "Describe a memorable experience related to personal goals.",
+    "Talk about one thing you would change about personal goals.",
+    "What do people often misunderstand about personal goals?",
+    "What makes personal goals important?",
+    "What is one advantage and one disadvantage of personal goals?",
+    "How might personal goals change in the future?",
+    "Do you think people give enough attention to personal goals? Why or why not?",
+    "What is one useful lesson people can learn from personal goals?"
+],
     thought: [
-      'Your friend is late again. Tell them clearly why this bothers you without sounding aggressive.',
-      'Your manager suggests an idea you disagree with. Explain your concern professionally.',
-      'You need to leave a social event early. Explain why without sounding rude.',
-      'Someone misunderstands what you said. Correct the misunderstanding calmly.',
-      'A colleague interrupts you repeatedly. Ask them to let you finish.',
-      'You are offered something you do not want. Decline politely but firmly.',
-      'You promised to do something but cannot finish it on time. Explain the situation and propose a solution.',
-      'A friend asks for advice about a problem you have never experienced. Respond honestly and helpfully.',
-      'You received poor service. Explain the problem and ask for it to be fixed.',
-      'Someone gives you criticism you partly agree with. Respond constructively.',
-      'You need more information before making a decision. Ask for exactly what you need.',
-      'A person is speaking too vaguely. Ask them to be more specific without embarrassing them.',
-      'You changed your mind after new information appeared. Explain what changed and why.',
-      'Someone pressures you to decide immediately. Ask for time to think.',
-      'You need to give someone bad news. Deliver it clearly and respectfully.',
-      'You think a meeting is going off-topic. Bring the discussion back to the main issue.',
-      'A colleague made a mistake that affects your work. Address it without blaming them.',
-      'Someone asks a question you cannot answer. Respond confidently without pretending to know.',
-      'You want to persuade a friend to reconsider a risky decision.',
-      'You disagree with a group decision but need to support the final outcome. Explain your position.',
-      'You need to ask someone to repeat an explanation because you did not understand it.',
-      'You want to end a conversation that is taking too long. Do it politely.',
-      'Someone keeps changing the plan. Ask for a final decision and clear next steps.',
-      'You need to set a boundary with someone who asks for too much of your time.',
-      'You accidentally offended someone. Apologize without overexplaining.',
-      'Someone compliments you. Accept the compliment naturally and continue the conversation.',
-      'You have two competing priorities. Explain how you will decide which one comes first.',
-      'A friend asks why you rejected an opportunity that looked attractive.',
-      'You want to challenge an assumption in a discussion without sounding confrontational.',
-      'You need to explain a complicated idea to someone with no background knowledge.',
-      'Someone asks for your opinion on a sensitive topic. Give a balanced answer.',
-      'You notice a potential problem before anyone else does. Raise it and suggest a practical response.',
-      'You need to ask for help but do not want to sound helpless.',
-      'You are asked to do something unrealistic. Renegotiate the expectation.',
-      'A person keeps avoiding a direct answer. Ask the question again more precisely.',
-      'You need to tell a friend that their plan is unlikely to work. Be tactful but clear.',
-      'You want to disagree with an older or more senior person respectfully.',
-      'You made a decision that others do not understand. Explain your reasoning simply.',
-      'A conversation becomes tense. Lower the tension and move toward a solution.',
-      'You need to summarize a long discussion in three clear points.'
-    ]
+    "A colleague at work has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A colleague at work keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A colleague at work asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A colleague at work gives you criticism that is partly fair. Respond constructively.",
+    "A colleague at work is speaking too vaguely. Ask for specific details.",
+    "A colleague at work disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a colleague at work bad news. Deliver it clearly and respectfully.",
+    "A colleague at work has made a mistake that affects you. Address the problem without blaming them.",
+    "A colleague at work pressures you to decide immediately. Ask for time and explain why.",
+    "A colleague at work needs your help but you are busy. Respond helpfully while protecting your time.",
+    "Your manager has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "Your manager keeps changing the plan. Ask for a final decision and clear next steps.",
+    "Your manager asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "Your manager gives you criticism that is partly fair. Respond constructively.",
+    "Your manager is speaking too vaguely. Ask for specific details.",
+    "Your manager disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give your manager bad news. Deliver it clearly and respectfully.",
+    "Your manager has made a mistake that affects you. Address the problem without blaming them.",
+    "Your manager pressures you to decide immediately. Ask for time and explain why.",
+    "Your manager needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A close friend has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A close friend keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A close friend asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A close friend gives you criticism that is partly fair. Respond constructively.",
+    "A close friend is speaking too vaguely. Ask for specific details.",
+    "A close friend disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a close friend bad news. Deliver it clearly and respectfully.",
+    "A close friend has made a mistake that affects you. Address the problem without blaming them.",
+    "A close friend pressures you to decide immediately. Ask for time and explain why.",
+    "A close friend needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A family member has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A family member keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A family member asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A family member gives you criticism that is partly fair. Respond constructively.",
+    "A family member is speaking too vaguely. Ask for specific details.",
+    "A family member disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a family member bad news. Deliver it clearly and respectfully.",
+    "A family member has made a mistake that affects you. Address the problem without blaming them.",
+    "A family member pressures you to decide immediately. Ask for time and explain why.",
+    "A family member needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A neighbour has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A neighbour keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A neighbour asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A neighbour gives you criticism that is partly fair. Respond constructively.",
+    "A neighbour is speaking too vaguely. Ask for specific details.",
+    "A neighbour disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a neighbour bad news. Deliver it clearly and respectfully.",
+    "A neighbour has made a mistake that affects you. Address the problem without blaming them.",
+    "A neighbour pressures you to decide immediately. Ask for time and explain why.",
+    "A neighbour needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A customer has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A customer keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A customer asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A customer gives you criticism that is partly fair. Respond constructively.",
+    "A customer is speaking too vaguely. Ask for specific details.",
+    "A customer disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a customer bad news. Deliver it clearly and respectfully.",
+    "A customer has made a mistake that affects you. Address the problem without blaming them.",
+    "A customer pressures you to decide immediately. Ask for time and explain why.",
+    "A customer needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A service provider has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A service provider keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A service provider asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A service provider gives you criticism that is partly fair. Respond constructively.",
+    "A service provider is speaking too vaguely. Ask for specific details.",
+    "A service provider disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a service provider bad news. Deliver it clearly and respectfully.",
+    "A service provider has made a mistake that affects you. Address the problem without blaming them.",
+    "A service provider pressures you to decide immediately. Ask for time and explain why.",
+    "A service provider needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A classmate has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A classmate keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A classmate asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A classmate gives you criticism that is partly fair. Respond constructively.",
+    "A classmate is speaking too vaguely. Ask for specific details.",
+    "A classmate disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a classmate bad news. Deliver it clearly and respectfully.",
+    "A classmate has made a mistake that affects you. Address the problem without blaming them.",
+    "A classmate pressures you to decide immediately. Ask for time and explain why.",
+    "A classmate needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A teammate has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A teammate keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A teammate asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A teammate gives you criticism that is partly fair. Respond constructively.",
+    "A teammate is speaking too vaguely. Ask for specific details.",
+    "A teammate disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a teammate bad news. Deliver it clearly and respectfully.",
+    "A teammate has made a mistake that affects you. Address the problem without blaming them.",
+    "A teammate pressures you to decide immediately. Ask for time and explain why.",
+    "A teammate needs your help but you are busy. Respond helpfully while protecting your time.",
+    "Someone in a group discussion has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "Someone in a group discussion keeps changing the plan. Ask for a final decision and clear next steps.",
+    "Someone in a group discussion asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "Someone in a group discussion gives you criticism that is partly fair. Respond constructively.",
+    "Someone in a group discussion is speaking too vaguely. Ask for specific details.",
+    "Someone in a group discussion disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give someone in a group discussion bad news. Deliver it clearly and respectfully.",
+    "Someone in a group discussion has made a mistake that affects you. Address the problem without blaming them.",
+    "Someone in a group discussion pressures you to decide immediately. Ask for time and explain why.",
+    "Someone in a group discussion needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A stranger in a public place has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A stranger in a public place keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A stranger in a public place asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A stranger in a public place gives you criticism that is partly fair. Respond constructively.",
+    "A stranger in a public place is speaking too vaguely. Ask for specific details.",
+    "A stranger in a public place disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a stranger in a public place bad news. Deliver it clearly and respectfully.",
+    "A stranger in a public place has made a mistake that affects you. Address the problem without blaming them.",
+    "A stranger in a public place pressures you to decide immediately. Ask for time and explain why.",
+    "A stranger in a public place needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A person you have just met has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A person you have just met keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A person you have just met asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A person you have just met gives you criticism that is partly fair. Respond constructively.",
+    "A person you have just met is speaking too vaguely. Ask for specific details.",
+    "A person you have just met disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a person you have just met bad news. Deliver it clearly and respectfully.",
+    "A person you have just met has made a mistake that affects you. Address the problem without blaming them.",
+    "A person you have just met pressures you to decide immediately. Ask for time and explain why.",
+    "A person you have just met needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A client has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A client keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A client asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A client gives you criticism that is partly fair. Respond constructively.",
+    "A client is speaking too vaguely. Ask for specific details.",
+    "A client disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a client bad news. Deliver it clearly and respectfully.",
+    "A client has made a mistake that affects you. Address the problem without blaming them.",
+    "A client pressures you to decide immediately. Ask for time and explain why.",
+    "A client needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A doctor or another professional has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A doctor or another professional keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A doctor or another professional asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A doctor or another professional gives you criticism that is partly fair. Respond constructively.",
+    "A doctor or another professional is speaking too vaguely. Ask for specific details.",
+    "A doctor or another professional disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a doctor or another professional bad news. Deliver it clearly and respectfully.",
+    "A doctor or another professional has made a mistake that affects you. Address the problem without blaming them.",
+    "A doctor or another professional pressures you to decide immediately. Ask for time and explain why.",
+    "A doctor or another professional needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A shop assistant has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A shop assistant keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A shop assistant asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A shop assistant gives you criticism that is partly fair. Respond constructively.",
+    "A shop assistant is speaking too vaguely. Ask for specific details.",
+    "A shop assistant disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a shop assistant bad news. Deliver it clearly and respectfully.",
+    "A shop assistant has made a mistake that affects you. Address the problem without blaming them.",
+    "A shop assistant pressures you to decide immediately. Ask for time and explain why.",
+    "A shop assistant needs your help but you are busy. Respond helpfully while protecting your time.",
+    "An online seller has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "An online seller keeps changing the plan. Ask for a final decision and clear next steps.",
+    "An online seller asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "An online seller gives you criticism that is partly fair. Respond constructively.",
+    "An online seller is speaking too vaguely. Ask for specific details.",
+    "An online seller disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give an online seller bad news. Deliver it clearly and respectfully.",
+    "An online seller has made a mistake that affects you. Address the problem without blaming them.",
+    "An online seller pressures you to decide immediately. Ask for time and explain why.",
+    "An online seller needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A landlord has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A landlord keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A landlord asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A landlord gives you criticism that is partly fair. Respond constructively.",
+    "A landlord is speaking too vaguely. Ask for specific details.",
+    "A landlord disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a landlord bad news. Deliver it clearly and respectfully.",
+    "A landlord has made a mistake that affects you. Address the problem without blaming them.",
+    "A landlord pressures you to decide immediately. Ask for time and explain why.",
+    "A landlord needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A coworker from another team has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A coworker from another team keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A coworker from another team asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A coworker from another team gives you criticism that is partly fair. Respond constructively.",
+    "A coworker from another team is speaking too vaguely. Ask for specific details.",
+    "A coworker from another team disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a coworker from another team bad news. Deliver it clearly and respectfully.",
+    "A coworker from another team has made a mistake that affects you. Address the problem without blaming them.",
+    "A coworker from another team pressures you to decide immediately. Ask for time and explain why.",
+    "A coworker from another team needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A person older than you has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A person older than you keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A person older than you asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A person older than you gives you criticism that is partly fair. Respond constructively.",
+    "A person older than you is speaking too vaguely. Ask for specific details.",
+    "A person older than you disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a person older than you bad news. Deliver it clearly and respectfully.",
+    "A person older than you has made a mistake that affects you. Address the problem without blaming them.",
+    "A person older than you pressures you to decide immediately. Ask for time and explain why.",
+    "A person older than you needs your help but you are busy. Respond helpfully while protecting your time.",
+    "A person who strongly disagrees with you has misunderstood what you said. Correct the misunderstanding clearly and calmly.",
+    "A person who strongly disagrees with you keeps changing the plan. Ask for a final decision and clear next steps.",
+    "A person who strongly disagrees with you asks you to do something you cannot realistically do. Set a boundary and offer an alternative.",
+    "A person who strongly disagrees with you gives you criticism that is partly fair. Respond constructively.",
+    "A person who strongly disagrees with you is speaking too vaguely. Ask for specific details.",
+    "A person who strongly disagrees with you disagrees with your idea. Defend your view without becoming confrontational.",
+    "You need to give a person who strongly disagrees with you bad news. Deliver it clearly and respectfully.",
+    "A person who strongly disagrees with you has made a mistake that affects you. Address the problem without blaming them.",
+    "A person who strongly disagrees with you pressures you to decide immediately. Ask for time and explain why.",
+    "A person who strongly disagrees with you needs your help but you are busy. Respond helpfully while protecting your time."
+]
   };
 
   const IELTS = {
     1: [
-      'Do you prefer mornings or evenings? Why?',
-      'How often do you use public transport?',
-      'What kind of weather do you enjoy most?',
-      'Do you enjoy cooking?',
-      'What do you usually do at weekends?',
-      'Do you often take photographs?',
-      'What kind of music do you listen to?',
-      'Do you prefer reading on paper or on a screen?',
-      'How important is exercise in your routine?',
-      'Do you like visiting crowded places?',
-      'What is your favourite room in your home?',
-      'How often do you spend time with friends?',
-      'Do you prefer to plan your day or be spontaneous?',
-      'What kind of food did you enjoy as a child?',
-      'Do you use social media every day?',
-      'What do you usually do when you feel tired?',
-      'Do you enjoy learning new skills?',
-      'How important is punctuality to you?',
-      'Do you prefer working alone or with other people?',
-      'What is one thing you would like to change about your neighbourhood?'
-    ],
+    "How important is reading in your daily life?",
+    "Has your interest in reading changed over time?",
+    "What do you like most about reading?",
+    "Is reading popular where you live?",
+    "Would you like to spend more time on reading in the future? Why or why not?",
+    "How important is cooking in your daily life?",
+    "Has your interest in cooking changed over time?",
+    "What do you like most about cooking?",
+    "Is cooking popular where you live?",
+    "Would you like to spend more time on cooking in the future? Why or why not?",
+    "How important is exercise in your daily life?",
+    "Has your interest in exercise changed over time?",
+    "What do you like most about exercise?",
+    "Is exercise popular where you live?",
+    "Would you like to spend more time on exercise in the future? Why or why not?",
+    "How important is music in your daily life?",
+    "Has your interest in music changed over time?",
+    "What do you like most about music?",
+    "Is music popular where you live?",
+    "Would you like to spend more time on music in the future? Why or why not?",
+    "How important is watching films in your daily life?",
+    "Has your interest in watching films changed over time?",
+    "What do you like most about watching films?",
+    "Is watching films popular where you live?",
+    "Would you like to spend more time on watching films in the future? Why or why not?",
+    "How important is photography in your daily life?",
+    "Has your interest in photography changed over time?",
+    "What do you like most about photography?",
+    "Is photography popular where you live?",
+    "Would you like to spend more time on photography in the future? Why or why not?",
+    "How important is travelling in your daily life?",
+    "Has your interest in travelling changed over time?",
+    "What do you like most about travelling?",
+    "Is travelling popular where you live?",
+    "Would you like to spend more time on travelling in the future? Why or why not?",
+    "How important is shopping in your daily life?",
+    "Has your interest in shopping changed over time?",
+    "What do you like most about shopping?",
+    "Is shopping popular where you live?",
+    "Would you like to spend more time on shopping in the future? Why or why not?",
+    "How important is social media in your daily life?",
+    "Has your interest in social media changed over time?",
+    "What do you like most about social media?",
+    "Is social media popular where you live?",
+    "Would you like to spend more time on social media in the future? Why or why not?",
+    "How important is using public transport in your daily life?",
+    "Has your interest in using public transport changed over time?",
+    "What do you like most about using public transport?",
+    "Is using public transport popular where you live?",
+    "Would you like to spend more time on using public transport in the future? Why or why not?",
+    "How important is walking in your daily life?",
+    "Has your interest in walking changed over time?",
+    "What do you like most about walking?",
+    "Is walking popular where you live?",
+    "Would you like to spend more time on walking in the future? Why or why not?",
+    "How important is visiting parks in your daily life?",
+    "Has your interest in visiting parks changed over time?",
+    "What do you like most about visiting parks?",
+    "Is visiting parks popular where you live?",
+    "Would you like to spend more time on visiting parks in the future? Why or why not?",
+    "How important is choosing clothes in your daily life?",
+    "Has your interest in choosing clothes changed over time?",
+    "What do you like most about choosing clothes?",
+    "Is choosing clothes popular where you live?",
+    "Would you like to spend more time on choosing clothes in the future? Why or why not?",
+    "How important is using technology in your daily life?",
+    "Has your interest in using technology changed over time?",
+    "What do you like most about using technology?",
+    "Is using technology popular where you live?",
+    "Would you like to spend more time on using technology in the future? Why or why not?",
+    "How important is meeting friends in your daily life?",
+    "Has your interest in meeting friends changed over time?",
+    "What do you like most about meeting friends?",
+    "Is meeting friends popular where you live?",
+    "Would you like to spend more time on meeting friends in the future? Why or why not?",
+    "How important is spending time with family in your daily life?",
+    "Has your interest in spending time with family changed over time?",
+    "What do you like most about spending time with family?",
+    "Is spending time with family popular where you live?",
+    "Would you like to spend more time on spending time with family in the future? Why or why not?",
+    "How important is learning languages in your daily life?",
+    "Has your interest in learning languages changed over time?",
+    "What do you like most about learning languages?",
+    "Is learning languages popular where you live?",
+    "Would you like to spend more time on learning languages in the future? Why or why not?",
+    "How important is studying in your daily life?",
+    "Has your interest in studying changed over time?",
+    "What do you like most about studying?",
+    "Is studying popular where you live?",
+    "Would you like to spend more time on studying in the future? Why or why not?",
+    "How important is working in your daily life?",
+    "Has your interest in working changed over time?",
+    "What do you like most about working?",
+    "Is working popular where you live?",
+    "Would you like to spend more time on working in the future? Why or why not?",
+    "How important is morning routines in your daily life?",
+    "Has your interest in morning routines changed over time?",
+    "What do you like most about morning routines?",
+    "Is morning routines popular where you live?",
+    "Would you like to spend more time on morning routines in the future? Why or why not?",
+    "How important is evening routines in your daily life?",
+    "Has your interest in evening routines changed over time?",
+    "What do you like most about evening routines?",
+    "Is evening routines popular where you live?",
+    "Would you like to spend more time on evening routines in the future? Why or why not?",
+    "How important is weekend activities in your daily life?",
+    "Has your interest in weekend activities changed over time?",
+    "What do you like most about weekend activities?",
+    "Is weekend activities popular where you live?",
+    "Would you like to spend more time on weekend activities in the future? Why or why not?",
+    "How important is planning holidays in your daily life?",
+    "Has your interest in planning holidays changed over time?",
+    "What do you like most about planning holidays?",
+    "Is planning holidays popular where you live?",
+    "Would you like to spend more time on planning holidays in the future? Why or why not?",
+    "How important is visiting cafés in your daily life?",
+    "Has your interest in visiting cafés changed over time?",
+    "What do you like most about visiting cafés?",
+    "Is visiting cafés popular where you live?",
+    "Would you like to spend more time on visiting cafés in the future? Why or why not?",
+    "How important is visiting museums in your daily life?",
+    "Has your interest in visiting museums changed over time?",
+    "What do you like most about visiting museums?",
+    "Is visiting museums popular where you live?",
+    "Would you like to spend more time on visiting museums in the future? Why or why not?",
+    "How important is playing sports in your daily life?",
+    "Has your interest in playing sports changed over time?",
+    "What do you like most about playing sports?",
+    "Is playing sports popular where you live?",
+    "Would you like to spend more time on playing sports in the future? Why or why not?",
+    "How important is playing games in your daily life?",
+    "Has your interest in playing games changed over time?",
+    "What do you like most about playing games?",
+    "Is playing games popular where you live?",
+    "Would you like to spend more time on playing games in the future? Why or why not?",
+    "How important is decorating your home in your daily life?",
+    "Has your interest in decorating your home changed over time?",
+    "What do you like most about decorating your home?",
+    "Is decorating your home popular where you live?",
+    "Would you like to spend more time on decorating your home in the future? Why or why not?",
+    "How important is caring for pets in your daily life?",
+    "Has your interest in caring for pets changed over time?",
+    "What do you like most about caring for pets?",
+    "Is caring for pets popular where you live?",
+    "Would you like to spend more time on caring for pets in the future? Why or why not?",
+    "How important is growing plants in your daily life?",
+    "Has your interest in growing plants changed over time?",
+    "What do you like most about growing plants?",
+    "Is growing plants popular where you live?",
+    "Would you like to spend more time on growing plants in the future? Why or why not?"
+],
     2: [
-      { q: 'Describe a person who is very good at communicating.', cues: ['who this person is', 'how you know them', 'what makes them a good communicator', 'and explain what you have learned from them'] },
-      { q: 'Describe a difficult decision you made.', cues: ['what the decision was', 'why it was difficult', 'what you considered before deciding', 'and explain how you felt afterwards'] },
-      { q: 'Describe a place you go to when you need to concentrate.', cues: ['where it is', 'what it is like', 'when you go there', 'and explain why you can concentrate there'] },
-      { q: 'Describe a useful skill you learned outside school.', cues: ['what the skill is', 'how you learned it', 'why you learned it', 'and explain how it has helped you'] },
-      { q: 'Describe a time when you had to change your plans.', cues: ['what you had planned', 'why the plan changed', 'what you did instead', 'and explain how you felt about the change'] },
-      { q: 'Describe a person whose advice you value.', cues: ['who the person is', 'what kind of advice they give', 'when you usually ask them', 'and explain why you trust their advice'] },
-      { q: 'Describe something expensive that you think was worth buying.', cues: ['what it was', 'when you bought it', 'why it was expensive', 'and explain why it was worth the money'] },
-      { q: 'Describe a time when you solved a problem successfully.', cues: ['what the problem was', 'why it was difficult', 'what you did', 'and explain what you learned from the experience'] },
-      { q: 'Describe a conversation you remember clearly.', cues: ['who you spoke with', 'where the conversation happened', 'what you talked about', 'and explain why you remember it'] },
-      { q: 'Describe a goal you would like to achieve.', cues: ['what the goal is', 'why it matters to you', 'what you need to do', 'and explain what might make it difficult'] },
-      { q: 'Describe a place you would like to visit again.', cues: ['where it is', 'when you went there', 'what you did there', 'and explain why you want to return'] },
-      { q: 'Describe a time when someone persuaded you to do something.', cues: ['who the person was', 'what they wanted you to do', 'how they persuaded you', 'and explain whether it was a good decision'] }
-    ],
+    {
+        "q": "Describe a person who communicates very well.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person who taught you something useful.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person you enjoy spending time with.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person who has an interesting job.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person who is good at solving problems.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person who gave you useful advice.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person you admire for their discipline.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person who makes others feel comfortable.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person who changed your opinion about something.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a person who is very creative.",
+        "cues": [
+            "who this person is",
+            "how you know them",
+            "what is special about them",
+            "and explain why you remember or value this person"
+        ]
+    },
+    {
+        "q": "Describe a place where you can concentrate.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a place you would like to visit again.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a place in your city that you often recommend.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a quiet place you enjoy spending time in.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a crowded place you found interesting.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a place where you learned something new.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a place that has changed a lot.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a place with beautiful natural scenery.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a place where you had a memorable meal.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a place you would like to live for a short time.",
+        "cues": [
+            "where this place is",
+            "when you went there",
+            "what you did there",
+            "and explain why this place was memorable"
+        ]
+    },
+    {
+        "q": "Describe a time when you solved a difficult problem.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you changed your plans unexpectedly.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you learned something quickly.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you helped someone.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you made a mistake and fixed it.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you were under pressure.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you were pleasantly surprised.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you had to be patient.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when someone persuaded you to do something.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe a time when you had an interesting conversation with a stranger.",
+        "cues": [
+            "when it happened",
+            "what the situation was",
+            "what you did",
+            "and explain what you learned or felt afterwards"
+        ]
+    },
+    {
+        "q": "Describe something you bought that was worth the money.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe an object you use almost every day.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe something you own that has sentimental value.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe a useful piece of technology you own.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe a gift you received that you still remember.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe an item you would like to replace.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe something you bought after thinking carefully.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe an object that makes your work or study easier.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe something you keep even though you rarely use it.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe a piece of clothing you really like.",
+        "cues": [
+            "what it is",
+            "when or how you got it",
+            "how you use it",
+            "and explain why it is important or useful to you"
+        ]
+    },
+    {
+        "q": "Describe a skill you learned outside school.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a skill you would like to master.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a practical skill everyone should learn.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a skill that took you a long time to improve.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a communication skill you have developed.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a digital skill you find useful.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a skill you learned from another person.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a skill that helps you in your work or study.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a skill you once found difficult.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a skill you want to teach someone else.",
+        "cues": [
+            "what the skill is",
+            "how you learned or would learn it",
+            "why it matters to you",
+            "and explain how it could help you"
+        ]
+    },
+    {
+        "q": "Describe a difficult decision you made.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision that saved you time or money.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision you made after changing your mind.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision you made without much time to think.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision that affected another person.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision you are proud of.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision that did not go as expected.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision you made based on someone’s advice.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a decision that changed one of your habits.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe a future decision you are currently considering.",
+        "cues": [
+            "what the decision was",
+            "why you had to make it",
+            "what you considered",
+            "and explain how you felt about the result"
+        ]
+    },
+    {
+        "q": "Describe an event you enjoyed attending.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe a celebration you remember well.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe a meeting or gathering that was useful.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe an event that did not go according to plan.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe a public event in your city.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe an event where you met someone interesting.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe a family event you remember clearly.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe a sporting event you watched or attended.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe an event that taught you something.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe an event you would like to attend in the future.",
+        "cues": [
+            "what the event was",
+            "where and when it happened",
+            "who was involved",
+            "and explain why you remember it"
+        ]
+    },
+    {
+        "q": "Describe a book that made you think.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a film you would recommend.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a video you learned something useful from.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a website you use regularly.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe an app that makes your life easier.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a news story that caught your attention.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a photograph you like.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a song that reminds you of a particular time.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe an advertisement you remember.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a podcast or programme you found interesting.",
+        "cues": [
+            "what it is",
+            "when you first saw, read or used it",
+            "what it is about",
+            "and explain why it interested you"
+        ]
+    },
+    {
+        "q": "Describe a goal you are currently working towards.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a goal you achieved after a lot of effort.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a health-related goal you would like to achieve.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a learning goal you have for the future.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a financial goal that matters to you.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a career goal you are considering.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a small goal that improved your routine.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a goal you changed after getting new information.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a goal that requires patience.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a goal you would like to achieve with another person.",
+        "cues": [
+            "what the goal is",
+            "why it matters to you",
+            "what you need to do",
+            "and explain what could make it difficult"
+        ]
+    },
+    {
+        "q": "Describe a positive change you made in your routine.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change in your city that you noticed.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change in technology that affected you.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change you initially disliked but later accepted.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change in the way you communicate.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change you would like to make to your home.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change in your priorities.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change that made your work or study easier.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change in a relationship that taught you something.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    },
+    {
+        "q": "Describe a change you expect in the next few years.",
+        "cues": [
+            "what the change is or was",
+            "why the change happened or may happen",
+            "how it affects or could affect you",
+            "and explain whether you think it is positive or negative"
+        ]
+    }
+],
     3: [
-      'Why are some people better at communicating than others?',
-      'Do people make better decisions alone or in groups?',
-      'How has technology changed the way people solve problems?',
-      'Why do people sometimes resist changing their habits?',
-      'What qualities are important in a good leader?',
-      'Should schools spend more time teaching practical life skills?',
-      'Why do some people find it difficult to admit mistakes?',
-      'How can cities encourage people to use public transport?',
-      'Do modern workplaces place too much pressure on employees?',
-      'Why are some advertisements more persuasive than others?',
-      'How important is face-to-face communication in the digital age?',
-      'Do people today have more choices than previous generations? Is that always positive?',
-      'What are the advantages and disadvantages of living in a highly competitive society?',
-      'Why do people often value experiences more as they get older?',
-      'Should companies be responsible for improving employees’ work-life balance?',
-      'How can individuals become better at handling disagreement?',
-      'Why do some people prefer predictable routines while others seek change?',
-      'What makes information on the internet trustworthy?',
-      'How might artificial intelligence change communication in the future?',
-      'Is it becoming harder for people to concentrate for long periods? Why?'
-    ]
+    "Why is education important in modern society?",
+    "How has education changed compared with the past?",
+    "What problems can arise when education is poorly managed?",
+    "Who should be mainly responsible for improving education: individuals, businesses or governments?",
+    "How do you think education will change in the future?",
+    "Why is public transport important in modern society?",
+    "How has public transport changed compared with the past?",
+    "What problems can arise when public transport is poorly managed?",
+    "Who should be mainly responsible for improving public transport: individuals, businesses or governments?",
+    "How do you think public transport will change in the future?",
+    "Why is healthcare important in modern society?",
+    "How has healthcare changed compared with the past?",
+    "What problems can arise when healthcare is poorly managed?",
+    "Who should be mainly responsible for improving healthcare: individuals, businesses or governments?",
+    "How do you think healthcare will change in the future?",
+    "Why is housing important in modern society?",
+    "How has housing changed compared with the past?",
+    "What problems can arise when housing is poorly managed?",
+    "Who should be mainly responsible for improving housing: individuals, businesses or governments?",
+    "How do you think housing will change in the future?",
+    "Why is work-life balance important in modern society?",
+    "How has work-life balance changed compared with the past?",
+    "What problems can arise when work-life balance is poorly managed?",
+    "Who should be mainly responsible for improving work-life balance: individuals, businesses or governments?",
+    "How do you think work-life balance will change in the future?",
+    "Why is online communication important in modern society?",
+    "How has online communication changed compared with the past?",
+    "What problems can arise when online communication is poorly managed?",
+    "Who should be mainly responsible for improving online communication: individuals, businesses or governments?",
+    "How do you think online communication will change in the future?",
+    "Why is advertising important in modern society?",
+    "How has advertising changed compared with the past?",
+    "What problems can arise when advertising is poorly managed?",
+    "Who should be mainly responsible for improving advertising: individuals, businesses or governments?",
+    "How do you think advertising will change in the future?",
+    "Why is consumer habits important in modern society?",
+    "How has consumer habits changed compared with the past?",
+    "What problems can arise when consumer habits is poorly managed?",
+    "Who should be mainly responsible for improving consumer habits: individuals, businesses or governments?",
+    "How do you think consumer habits will change in the future?",
+    "Why is environmental protection important in modern society?",
+    "How has environmental protection changed compared with the past?",
+    "What problems can arise when environmental protection is poorly managed?",
+    "Who should be mainly responsible for improving environmental protection: individuals, businesses or governments?",
+    "How do you think environmental protection will change in the future?",
+    "Why is tourism important in modern society?",
+    "How has tourism changed compared with the past?",
+    "What problems can arise when tourism is poorly managed?",
+    "Who should be mainly responsible for improving tourism: individuals, businesses or governments?",
+    "How do you think tourism will change in the future?",
+    "Why is technology use important in modern society?",
+    "How has technology use changed compared with the past?",
+    "What problems can arise when technology use is poorly managed?",
+    "Who should be mainly responsible for improving technology use: individuals, businesses or governments?",
+    "How do you think technology use will change in the future?",
+    "Why is artificial intelligence important in modern society?",
+    "How has artificial intelligence changed compared with the past?",
+    "What problems can arise when artificial intelligence is poorly managed?",
+    "Who should be mainly responsible for improving artificial intelligence: individuals, businesses or governments?",
+    "How do you think artificial intelligence will change in the future?",
+    "Why is social media important in modern society?",
+    "How has social media changed compared with the past?",
+    "What problems can arise when social media is poorly managed?",
+    "Who should be mainly responsible for improving social media: individuals, businesses or governments?",
+    "How do you think social media will change in the future?",
+    "Why is city planning important in modern society?",
+    "How has city planning changed compared with the past?",
+    "What problems can arise when city planning is poorly managed?",
+    "Who should be mainly responsible for improving city planning: individuals, businesses or governments?",
+    "How do you think city planning will change in the future?",
+    "Why is public spaces important in modern society?",
+    "How has public spaces changed compared with the past?",
+    "What problems can arise when public spaces is poorly managed?",
+    "Who should be mainly responsible for improving public spaces: individuals, businesses or governments?",
+    "How do you think public spaces will change in the future?",
+    "Why is exercise habits important in modern society?",
+    "How has exercise habits changed compared with the past?",
+    "What problems can arise when exercise habits is poorly managed?",
+    "Who should be mainly responsible for improving exercise habits: individuals, businesses or governments?",
+    "How do you think exercise habits will change in the future?",
+    "Why is food choices important in modern society?",
+    "How has food choices changed compared with the past?",
+    "What problems can arise when food choices is poorly managed?",
+    "Who should be mainly responsible for improving food choices: individuals, businesses or governments?",
+    "How do you think food choices will change in the future?",
+    "Why is financial literacy important in modern society?",
+    "How has financial literacy changed compared with the past?",
+    "What problems can arise when financial literacy is poorly managed?",
+    "Who should be mainly responsible for improving financial literacy: individuals, businesses or governments?",
+    "How do you think financial literacy will change in the future?",
+    "Why is leadership important in modern society?",
+    "How has leadership changed compared with the past?",
+    "What problems can arise when leadership is poorly managed?",
+    "Who should be mainly responsible for improving leadership: individuals, businesses or governments?",
+    "How do you think leadership will change in the future?",
+    "Why is teamwork important in modern society?",
+    "How has teamwork changed compared with the past?",
+    "What problems can arise when teamwork is poorly managed?",
+    "Who should be mainly responsible for improving teamwork: individuals, businesses or governments?",
+    "How do you think teamwork will change in the future?",
+    "Why is workplace culture important in modern society?",
+    "How has workplace culture changed compared with the past?",
+    "What problems can arise when workplace culture is poorly managed?",
+    "Who should be mainly responsible for improving workplace culture: individuals, businesses or governments?",
+    "How do you think workplace culture will change in the future?",
+    "Why is lifelong learning important in modern society?",
+    "How has lifelong learning changed compared with the past?",
+    "What problems can arise when lifelong learning is poorly managed?",
+    "Who should be mainly responsible for improving lifelong learning: individuals, businesses or governments?",
+    "How do you think lifelong learning will change in the future?",
+    "Why is language education important in modern society?",
+    "How has language education changed compared with the past?",
+    "What problems can arise when language education is poorly managed?",
+    "Who should be mainly responsible for improving language education: individuals, businesses or governments?",
+    "How do you think language education will change in the future?",
+    "Why is privacy important in modern society?",
+    "How has privacy changed compared with the past?",
+    "What problems can arise when privacy is poorly managed?",
+    "Who should be mainly responsible for improving privacy: individuals, businesses or governments?",
+    "How do you think privacy will change in the future?",
+    "Why is news and information important in modern society?",
+    "How has news and information changed compared with the past?",
+    "What problems can arise when news and information is poorly managed?",
+    "Who should be mainly responsible for improving news and information: individuals, businesses or governments?",
+    "How do you think news and information will change in the future?",
+    "Why is family life important in modern society?",
+    "How has family life changed compared with the past?",
+    "What problems can arise when family life is poorly managed?",
+    "Who should be mainly responsible for improving family life: individuals, businesses or governments?",
+    "How do you think family life will change in the future?",
+    "Why is ageing populations important in modern society?",
+    "How has ageing populations changed compared with the past?",
+    "What problems can arise when ageing populations is poorly managed?",
+    "Who should be mainly responsible for improving ageing populations: individuals, businesses or governments?",
+    "How do you think ageing populations will change in the future?",
+    "Why is youth employment important in modern society?",
+    "How has youth employment changed compared with the past?",
+    "What problems can arise when youth employment is poorly managed?",
+    "Who should be mainly responsible for improving youth employment: individuals, businesses or governments?",
+    "How do you think youth employment will change in the future?",
+    "Why is cultural traditions important in modern society?",
+    "How has cultural traditions changed compared with the past?",
+    "What problems can arise when cultural traditions is poorly managed?",
+    "Who should be mainly responsible for improving cultural traditions: individuals, businesses or governments?",
+    "How do you think cultural traditions will change in the future?",
+    "Why is community relationships important in modern society?",
+    "How has community relationships changed compared with the past?",
+    "What problems can arise when community relationships is poorly managed?",
+    "Who should be mainly responsible for improving community relationships: individuals, businesses or governments?",
+    "How do you think community relationships will change in the future?"
+]
   };
 
+  const QUESTION_BANK_TOTAL = BANKS.random.length + BANKS.thought.length + IELTS[1].length + IELTS[2].length + IELTS[3].length;
+  if (QUESTION_BANK_TOTAL !== 1000) console.warn('Question bank count:', QUESTION_BANK_TOTAL);
+
   const state = {
-    mode: 'instant',
+    mode: 'random',
     prompt: '',
     cues: [],
     recorder: null,
@@ -314,15 +1957,13 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     recording: false,
     countdown: false,
     tick: null,
-    secondsLeft: 60,
+    secondsLeft: 0,
     startedAt: 0,
     blob: null,
-    wavBlob: null,
     metrics: null,
     playbackUrl: null,
     deferredInstall: null,
     lastResult: null,
-    instantRevealed: false,
     lastIndexByKey: {}
   };
 
@@ -333,7 +1974,7 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     gradeStatus: $('#gradeStatus'), resultSection: $('#resultSection'), resultHeadline: $('#resultHeadline'), resultSummary: $('#resultSummary'), bandScore: $('#bandScore'),
     scoreGrid: $('#scoreGrid'), deliveryMetrics: $('#deliveryMetrics'), criterionFeedback: $('#criterionFeedback'), transcriptText: $('#transcriptText'), strengthList: $('#strengthList'), issueList: $('#issueList'), betterAnswer: $('#betterAnswer'), band9Answer: $('#band9Answer'),
     samePromptBtn: $('#samePromptBtn'), nextPromptBtn: $('#nextPromptBtn'), progressStats: $('#progressStats'), historyList: $('#historyList'), clearHistoryBtn: $('#clearHistoryBtn'),
-    apiKeyBtn: $('#apiKeyBtn'), toast: $('#toast')
+    apiKeyBtn: $('#apiKeyBtn'), installBtn: $('#installBtn'), toast: $('#toast')
   };
 
   function formatTime(sec) {
@@ -354,6 +1995,28 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
 
   function currentIeltsPart() { return Number(els.ieltsPart.value || 1); }
 
+  function isLongFormPrompt() {
+    return (state.mode === 'ielts' && currentIeltsPart() === 2) || /^\s*(describe|talk about)\b/i.test(state.prompt || '');
+  }
+
+  function timerIsFree() { return els.timeLimit.value === 'free'; }
+
+  function applyDefaultTimerForPrompt() {
+    els.timeLimit.value = isLongFormPrompt() ? '120' : 'free';
+  }
+
+  function updateTimerPreview() {
+    if (timerIsFree()) {
+      state.secondsLeft = 0;
+      els.timer.textContent = '00:00';
+      els.timerLabel.textContent = 'READY · FREE';
+    } else {
+      state.secondsLeft = Number(els.timeLimit.value);
+      els.timer.textContent = formatTime(state.secondsLeft);
+      els.timerLabel.textContent = 'READY · COUNTDOWN';
+    }
+  }
+
   function setPrompt(next = true) {
     if (!next && state.prompt) return;
     state.cues = [];
@@ -364,15 +2027,16 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
         state.prompt = item.q;
         state.cues = item.cues;
       } else state.prompt = item;
-      els.promptMeta.textContent = `IELTS SPEAKING · PART ${part}`;
+      els.promptMeta.textContent = `IELTS PART ${part} · ${IELTS[part].length} QUESTIONS`;
     } else {
       state.prompt = pickNonRepeat(BANKS[state.mode], state.mode);
-      const labels = { instant: 'INSTANT RESPONSE', random: 'RANDOM SPEAKING', thought: 'THOUGHT → SPEECH' };
+      const labels = { random: `RANDOM · ${BANKS.random.length} QUESTIONS`, thought: `THOUGHT → SPEECH · ${BANKS.thought.length} QUESTIONS` };
       els.promptMeta.textContent = labels[state.mode];
     }
-    state.instantRevealed = state.mode !== 'instant';
-    els.promptText.textContent = state.mode === 'instant' ? 'Prompt hidden — tap START' : state.prompt;
+    els.promptText.textContent = state.prompt;
     els.cueList.innerHTML = state.cues.length ? `<ul>${state.cues.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>` : '';
+    applyDefaultTimerForPrompt();
+    updateMicrocopy();
     resetRecordingUI(false);
   }
 
@@ -385,21 +2049,29 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     state.mode = mode;
     $$('.mode-card').forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     els.ieltsPartWrap.hidden = mode !== 'ielts';
-    if (mode === 'ielts' && currentIeltsPart() === 2 && Number(els.timeLimit.value) < 90) els.timeLimit.value = '120';
-    updateMicrocopy();
     setPrompt();
   }
 
   function updateMicrocopy() {
-    if (state.mode === 'instant') els.microcopy.textContent = 'The question stays hidden. Tap START → 3-second countdown → prompt appears at GO. Your response latency is measured from that moment.';
-    else if (state.mode === 'ielts' && currentIeltsPart() === 2) els.microcopy.textContent = 'Use this as a timed answer. For a full IELTS simulation, give yourself up to 1 minute to prepare before pressing START.';
-    else els.microcopy.textContent = 'Tap START and answer naturally. Stop early when you are done or let the timer end automatically.';
+    if (state.mode === 'ielts' && currentIeltsPart() === 2) {
+      els.microcopy.textContent = timerIsFree()
+        ? 'IELTS Part 2 normally uses 2 minutes. You switched to Free style, so the clock counts up until you stop.'
+        : 'IELTS Part 2 defaults to 2 minutes. You can change the countdown or switch to Free style anytime.';
+    } else if (isLongFormPrompt()) {
+      els.microcopy.textContent = timerIsFree()
+        ? 'Long-form prompt in Free style: speak until your answer feels complete, then stop.'
+        : 'Describe/Talk about prompts default to 2 minutes. Change the timer if you want.';
+    } else {
+      els.microcopy.textContent = timerIsFree()
+        ? 'Free style: the clock counts up with no automatic stop. Focus on answering the question well.'
+        : 'Countdown mode: the recording stops automatically when the selected time reaches zero.';
+    }
   }
 
   function resetRecordingUI(keepPrompt = true) {
     stopTracks();
     clearInterval(state.tick); state.tick = null;
-    state.recording = false; state.countdown = false; state.chunks = []; state.blob = null; state.wavBlob = null; state.metrics = null;
+    state.recording = false; state.countdown = false; state.chunks = []; state.blob = null; state.metrics = null;
     if (state.playbackUrl) URL.revokeObjectURL(state.playbackUrl);
     state.playbackUrl = null;
     els.recordedPanel.classList.add('hidden');
@@ -409,9 +2081,7 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     els.recordBtn.classList.remove('recording');
     els.recordBtnText.textContent = 'START';
     els.recordBtn.disabled = false;
-    state.secondsLeft = Number(els.timeLimit.value);
-    els.timer.textContent = formatTime(state.secondsLeft);
-    els.timerLabel.textContent = 'READY';
+    updateTimerPreview();
     if (!keepPrompt) state.lastResult = null;
   }
 
@@ -434,7 +2104,6 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     }
     try {
       state.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
-      if (state.mode === 'instant') await runCountdown(3);
       await beginRecording();
     } catch (err) {
       stopTracks();
@@ -443,27 +2112,6 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     }
   }
 
-  function runCountdown(seconds) {
-    return new Promise(resolve => {
-      state.countdown = true;
-      els.recordBtn.disabled = true;
-      let n = seconds;
-      els.timerLabel.textContent = 'GET READY';
-      els.timer.textContent = String(n);
-      const id = setInterval(() => {
-        n -= 1;
-        if (n <= 0) {
-          clearInterval(id);
-          els.timer.textContent = 'GO';
-          if (state.mode === 'instant' && !state.instantRevealed) {
-            state.instantRevealed = true;
-            els.promptText.textContent = state.prompt;
-          }
-          state.countdown = false; els.recordBtn.disabled = false; resolve();
-        } else els.timer.textContent = String(n);
-      }, 700);
-    });
-  }
 
   async function beginRecording() {
     state.chunks = [];
@@ -474,17 +2122,22 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     state.recorder.start(250);
     state.recording = true;
     state.startedAt = performance.now();
-    state.secondsLeft = Number(els.timeLimit.value);
+    const free = timerIsFree();
+    state.secondsLeft = free ? 0 : Number(els.timeLimit.value);
     els.recordBtn.classList.add('recording');
     els.recordBtnText.textContent = 'STOP';
-    els.timerLabel.textContent = 'RECORDING';
-    els.timer.textContent = formatTime(state.secondsLeft);
+    els.timerLabel.textContent = free ? 'RECORDING · FREE' : 'RECORDING · COUNTDOWN';
+    els.timer.textContent = free ? '00:00' : formatTime(state.secondsLeft);
     clearInterval(state.tick);
     state.tick = setInterval(() => {
       const elapsed = (performance.now() - state.startedAt) / 1000;
-      state.secondsLeft = Math.max(0, Number(els.timeLimit.value) - elapsed);
-      els.timer.textContent = formatTime(state.secondsLeft);
-      if (state.secondsLeft <= 0.03) stopRecording();
+      if (free) {
+        els.timer.textContent = formatTime(elapsed);
+      } else {
+        state.secondsLeft = Math.max(0, Number(els.timeLimit.value) - elapsed);
+        els.timer.textContent = formatTime(state.secondsLeft);
+        if (state.secondsLeft <= 0.03) stopRecording();
+      }
     }, 100);
   }
 
@@ -505,9 +2158,7 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
       state.blob = new Blob(state.chunks, { type: sourceType });
       if (state.blob.size < 800) throw new Error('Recording is empty.');
       const processed = await convertAndMeasure(state.blob, WAV_SAMPLE_RATE);
-      state.wavBlob = processed.wavBlob;
       state.metrics = processed.metrics;
-      if (state.wavBlob.size > MAX_WAV_BYTES) throw new Error('The recording is too large to grade. Use a shorter time limit.');
       state.playbackUrl = URL.createObjectURL(state.blob);
       els.playback.src = state.playbackUrl;
       renderLocalMetrics();
@@ -538,8 +2189,7 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     const mono = mixToMono(buffer);
     const resampled = resampleLinear(mono, buffer.sampleRate, targetRate);
     const metrics = analyzeSpeech(resampled, targetRate);
-    const wavBuffer = encodeWav16(resampled, targetRate);
-    return { wavBlob: new Blob([wavBuffer], { type: 'audio/wav' }), metrics };
+    return { metrics };
   }
 
   function mixToMono(buffer) {
@@ -691,10 +2341,11 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
   function buildAssessmentPrompt() {
     const m = state.metrics || {};
     const part = state.mode === 'ielts' ? currentIeltsPart() : null;
+    const timerDescription = timerIsFree() ? 'Free style: no countdown; the speaker chose when to stop.' : `Countdown: ${els.timeLimit.value} seconds.`;
     const modeInstruction = state.mode === 'ielts'
       ? `This is IELTS Speaking Part ${part}. Apply IELTS Speaking public-band logic rigorously to Fluency & Coherence, Lexical Resource, Grammatical Range & Accuracy, and Pronunciation.`
       : 'This is a spontaneous speaking-performance drill. Give an IELTS-equivalent estimate for tracking, but judge the answer primarily as natural, clear, direct spoken English.';
-    return `You are an exacting English speaking coach and IELTS speaking assessor. Listen to the ENTIRE audio before scoring. Be evidence-based and conservative: do not award a high score just because the answer is understandable.\n\nTASK\n${modeInstruction}\nPrompt: ${state.prompt}\n${state.cues.length ? `Cue points: ${state.cues.join(' | ')}` : ''}\nBrowser-measured delivery metrics (supporting evidence, not ground truth):\n- total recording duration: ${m.duration ?? 'unknown'} seconds\n- response latency: ${m.responseLatency ?? 'unknown'} seconds\n- long internal pauses >=0.8s: ${m.longPauses ?? 'unknown'}\n- silence ratio inside speech span: ${m.silenceRatio ?? 'unknown'}\n\nSCORE 8 DIMENSIONS, EACH 0-9 IN 0.5 INCREMENTS\n1. fluencyCoherence — flow, hesitation, repetition, self-correction, linking, logical progression and development.\n2. lexicalResource — range, precision, collocation, paraphrase, idiomatic naturalness, repetition and translation-like wording.\n3. grammar — grammatical range plus accuracy under spontaneous speaking pressure.\n4. pronunciation — intelligibility, individual sounds only where clearly audible, final consonants, word stress, sentence stress, rhythm and connected speech. Do NOT invent phoneme errors.\n5. ideaDevelopment — quality and completeness of explanation, support, examples and depth relative to the time available.\n6. relevanceDirectness — whether the speaker answers the exact question promptly, stays on point and avoids unnecessary detours.\n7. naturalnessSpontaneity — whether the answer sounds genuinely generated in real time rather than translated, memorized, over-engineered or formulaic.\n8. deliveryPacing — speaking rate, pause placement, rhythm, filler control, response latency and overall ease of listening.\n\nIELTS ESTIMATE\n- estimatedBand must be a 0.5 increment from 0-9 and be based ONLY on the four IELTS criteria: fluencyCoherence, lexicalResource, grammar, pronunciation.\n- overallScore is 0-100 and reflects all 8 dimensions plus the measured delivery metrics.\n- This is training feedback, not an official IELTS result.\n\nDETAILED FEEDBACK RULES\n1. Transcribe exactly what the speaker says; preserve meaningful fillers, false starts and self-corrections. Do not silently fix grammar.\n2. For EVERY one of the 8 dimensions return: a concise verdict, one short exact evidence fragment from the transcript when possible, and one concrete nextStep. If evidence is mainly acoustic, describe only what is clearly audible.\n3. Return 2-5 specific strengths.\n4. Return up to 8 highest-value issues. Each issue must contain a short exact evidence fragment when possible and a practical fix. Prioritize recurring/high-impact problems over tiny slips.\n5. pronunciationDetails must separately address intelligibility, soundsFinals, stressRhythm, and connectedSpeech. Be careful and never fabricate sound errors.\n6. betterAnswer must preserve the speaker's intended meaning, correct the weaknesses, and remain realistic for the same time limit.\n7. band9Answer must be a natural high-level model answer, not a memorized essay, and proportionate to the time limit.\n8. fillerWords must contain fillers actually heard, not generic examples.\n9. summary must be blunt, diagnostic and under 55 words.\n\nReturn ONLY valid JSON with exactly this shape:\n{\n  "transcript":"",\n  "summary":"",\n  "estimatedBand":0,\n  "overallScore":0,\n  "scores":{\n    "fluencyCoherence":0,\n    "lexicalResource":0,\n    "grammar":0,\n    "pronunciation":0,\n    "ideaDevelopment":0,\n    "relevanceDirectness":0,\n    "naturalnessSpontaneity":0,\n    "deliveryPacing":0\n  },\n  "criterionFeedback":{\n    "fluencyCoherence":{"verdict":"","evidence":"","nextStep":""},\n    "lexicalResource":{"verdict":"","evidence":"","nextStep":""},\n    "grammar":{"verdict":"","evidence":"","nextStep":""},\n    "pronunciation":{"verdict":"","evidence":"","nextStep":""},\n    "ideaDevelopment":{"verdict":"","evidence":"","nextStep":""},\n    "relevanceDirectness":{"verdict":"","evidence":"","nextStep":""},\n    "naturalnessSpontaneity":{"verdict":"","evidence":"","nextStep":""},\n    "deliveryPacing":{"verdict":"","evidence":"","nextStep":""}\n  },\n  "pronunciationDetails":{"intelligibility":"","soundsFinals":"","stressRhythm":"","connectedSpeech":""},\n  "strengths":[],\n  "issues":[{"title":"","evidence":"","fix":""}],\n  "betterAnswer":"",\n  "band9Answer":"",\n  "fillerWords":[],\n  "wordCount":0\n}`;
+    return `You are an exacting English speaking coach and IELTS speaking assessor. Listen to the ENTIRE audio before scoring. Be evidence-based and conservative: do not award a high score just because the answer is understandable.\n\nTASK\n${modeInstruction}\nPrompt: ${state.prompt}\n${state.cues.length ? `Cue points: ${state.cues.join(' | ')}` : ''}\nTimer mode: ${timerDescription}\nBrowser-measured delivery metrics (supporting evidence, not ground truth):\n- total recording duration: ${m.duration ?? 'unknown'} seconds\n- response latency: ${m.responseLatency ?? 'unknown'} seconds\n- long internal pauses >=0.8s: ${m.longPauses ?? 'unknown'}\n- silence ratio inside speech span: ${m.silenceRatio ?? 'unknown'}\n\nSCORE 8 DIMENSIONS, EACH 0-9 IN 0.5 INCREMENTS\n1. fluencyCoherence — flow, hesitation, repetition, self-correction, linking, logical progression and development.\n2. lexicalResource — range, precision, collocation, paraphrase, idiomatic naturalness, repetition and translation-like wording.\n3. grammar — grammatical range plus accuracy under spontaneous speaking pressure.\n4. pronunciation — intelligibility, individual sounds only where clearly audible, final consonants, word stress, sentence stress, rhythm and connected speech. Do NOT invent phoneme errors.\n5. ideaDevelopment — quality and completeness of explanation, support, examples and depth relative to the prompt. In Free style, do not penalize merely for being shorter or longer if the response is complete and relevant.\n6. relevanceDirectness — whether the speaker answers the exact question promptly, stays on point and avoids unnecessary detours.\n7. naturalnessSpontaneity — whether the answer sounds genuinely generated in real time rather than translated, memorized, over-engineered or formulaic.\n8. deliveryPacing — speaking rate, pause placement, rhythm, filler control, response latency and overall ease of listening.\n\nIELTS ESTIMATE\n- estimatedBand must be a 0.5 increment from 0-9 and be based ONLY on the four IELTS criteria: fluencyCoherence, lexicalResource, grammar, pronunciation.\n- overallScore is 0-100 and reflects all 8 dimensions plus the measured delivery metrics.\n- This is training feedback, not an official IELTS result.\n\nDETAILED FEEDBACK RULES\n1. Transcribe exactly what the speaker says; preserve meaningful fillers, false starts and self-corrections. Do not silently fix grammar.\n2. For EVERY one of the 8 dimensions return: a concise verdict, one short exact evidence fragment from the transcript when possible, and one concrete nextStep. If evidence is mainly acoustic, describe only what is clearly audible.\n3. Return 2-5 specific strengths.\n4. Return up to 8 highest-value issues. Each issue must contain a short exact evidence fragment when possible and a practical fix. Prioritize recurring/high-impact problems over tiny slips.\n5. pronunciationDetails must separately address intelligibility, soundsFinals, stressRhythm, and connectedSpeech. Be careful and never fabricate sound errors.\n6. betterAnswer must preserve the speaker's intended meaning and correct the weaknesses. In Free style, keep it concise but complete rather than forcing a fixed duration.\n7. band9Answer must be a natural high-level model answer, not a memorized essay, and proportionate to the prompt.\n8. fillerWords must contain fillers actually heard, not generic examples.\n9. summary must be blunt, diagnostic and under 55 words.\n\nReturn ONLY valid JSON with exactly this shape:\n{\n  "transcript":"",\n  "summary":"",\n  "estimatedBand":0,\n  "overallScore":0,\n  "scores":{\n    "fluencyCoherence":0,\n    "lexicalResource":0,\n    "grammar":0,\n    "pronunciation":0,\n    "ideaDevelopment":0,\n    "relevanceDirectness":0,\n    "naturalnessSpontaneity":0,\n    "deliveryPacing":0\n  },\n  "criterionFeedback":{\n    "fluencyCoherence":{"verdict":"","evidence":"","nextStep":""},\n    "lexicalResource":{"verdict":"","evidence":"","nextStep":""},\n    "grammar":{"verdict":"","evidence":"","nextStep":""},\n    "pronunciation":{"verdict":"","evidence":"","nextStep":""},\n    "ideaDevelopment":{"verdict":"","evidence":"","nextStep":""},\n    "relevanceDirectness":{"verdict":"","evidence":"","nextStep":""},\n    "naturalnessSpontaneity":{"verdict":"","evidence":"","nextStep":""},\n    "deliveryPacing":{"verdict":"","evidence":"","nextStep":""}\n  },\n  "pronunciationDetails":{"intelligibility":"","soundsFinals":"","stressRhythm":"","connectedSpeech":""},\n  "strengths":[],\n  "issues":[{"title":"","evidence":"","fix":""}],\n  "betterAnswer":"",\n  "band9Answer":"",\n  "fillerWords":[],\n  "wordCount":0\n}`;
   }
 
   function extractGeminiText(payload) {
@@ -714,7 +2365,8 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
   }
 
   async function grade() {
-    if (!state.wavBlob || !state.metrics) return toast('Record an answer first.');
+    if (!state.blob || !state.metrics) return toast('Record an answer first.');
+    if (state.blob.size > MAX_AUDIO_BYTES) return toast('Recording saved, but this single audio file is too large for inline AI grading. For grading, keep one answer under roughly 30 minutes.');
     if (!navigator.onLine) return toast('AI grading needs an internet connection.');
     let apiKey = getApiKey();
     if (!apiKey) apiKey = askForApiKey(true);
@@ -723,14 +2375,15 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
     els.retryBtn.disabled = true;
     els.gradeStatus.textContent = 'Sending audio directly to Gemini and grading…';
     try {
-      const audioBase64 = await blobToBase64(state.wavBlob);
+      const audioBase64 = await blobToBase64(state.blob);
+      const audioMime = (state.blob.type || 'audio/webm').split(';')[0];
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
         body: JSON.stringify({
           contents: [{ role: 'user', parts: [
             { text: buildAssessmentPrompt() },
-            { inlineData: { mimeType: 'audio/wav', data: audioBase64 } }
+            { inlineData: { mimeType: audioMime, data: audioBase64 } }
           ] }],
           generationConfig: { responseMimeType: 'application/json', temperature: 0.15 }
         })
@@ -867,7 +2520,7 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
   }
 
   function modeLabel(mode) {
-    return ({ instant: 'Instant', random: 'Random', ielts: `IELTS Part ${currentIeltsPart()}`, thought: 'Thought → Speech' })[mode] || mode;
+    return ({ random: 'Random', ielts: `IELTS Part ${currentIeltsPart()}`, thought: 'Thought → Speech' })[mode] || mode;
   }
 
   function getHistory() {
@@ -927,21 +2580,49 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
   function wire() {
     $$('.mode-card').forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
     els.randomBtn.addEventListener('click', () => setPrompt());
-    els.ieltsPart.addEventListener('change', () => { if (currentIeltsPart() === 2 && Number(els.timeLimit.value) < 90) els.timeLimit.value = '120'; updateMicrocopy(); setPrompt(); });
-    els.timeLimit.addEventListener('change', () => { if (!state.recording && !state.countdown) { state.secondsLeft = Number(els.timeLimit.value); els.timer.textContent = formatTime(state.secondsLeft); } });
+    els.ieltsPart.addEventListener('change', () => setPrompt());
+    els.timeLimit.addEventListener('change', () => {
+      if (!state.recording && !state.countdown) {
+        updateTimerPreview();
+        updateMicrocopy();
+      }
+    });
     els.recordBtn.addEventListener('click', startFlow);
     els.retryBtn.addEventListener('click', () => resetRecordingUI(true));
     els.gradeBtn.addEventListener('click', grade);
-    els.samePromptBtn.addEventListener('click', () => { resetRecordingUI(true); $('.practice-card').scrollIntoView({ behavior:'smooth', block:'start' }); });
-    els.nextPromptBtn.addEventListener('click', () => { setPrompt(); $('.practice-card').scrollIntoView({ behavior:'smooth', block:'start' }); });
+    els.samePromptBtn.addEventListener('click', () => { resetRecordingUI(true); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    els.nextPromptBtn.addEventListener('click', () => { setPrompt(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
     els.clearHistoryBtn.addEventListener('click', () => {
       if (!getHistory().length) return;
       if (confirm('Clear all locally stored speaking results on this device?')) { localStorage.removeItem(HISTORY_KEY); renderHistory(); }
     });
-
     els.apiKeyBtn.addEventListener('click', () => askForApiKey(true));
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      state.deferredInstall = event;
+      els.installBtn.classList.remove('hidden');
+    });
+    els.installBtn.addEventListener('click', async () => {
+      if (!state.deferredInstall) {
+        toast('If Install is not available, use your browser menu → Add to Home screen / Install app.');
+        return;
+      }
+      state.deferredInstall.prompt();
+      await state.deferredInstall.userChoice.catch(() => null);
+      state.deferredInstall = null;
+      els.installBtn.classList.add('hidden');
+    });
+    window.addEventListener('appinstalled', () => {
+      state.deferredInstall = null;
+      els.installBtn.classList.add('hidden');
+      toast('SpeakSharp installed.');
+    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
   }
-  wire(); updateApiKeyButton(); renderHistory(); updateMicrocopy(); setPrompt();
+  wire(); updateApiKeyButton(); renderHistory(); setPrompt();
 })();
 
   </script>
