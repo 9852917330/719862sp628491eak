@@ -1,4 +1,4 @@
-const CACHE = 'speaksharp-v3-auto-update-20260831';
+const CACHE = 'speaksharp-v4-topics-logo-20260831';
 const OFFLINE_ASSETS = [
   './index.html',
   './manifest.webmanifest',
@@ -25,7 +25,7 @@ self.addEventListener('activate', event => {
 async function networkFirst(request) {
   try {
     const response = await fetch(request, { cache: 'no-store' });
-    if (response && response.ok) {
+    if (response && (response.ok || response.type === 'opaque')) {
       const cache = await caches.open(CACHE);
       cache.put(request, response.clone()).catch(() => {});
     }
@@ -46,7 +46,9 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
+  const sameOrigin = url.origin === self.location.origin;
+  const fontAsset = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com';
+  if (!sameOrigin && !fontAsset) return;
 
   // Always prefer the newest online file. Cache is only an offline fallback.
   event.respondWith(networkFirst(request));
