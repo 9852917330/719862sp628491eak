@@ -2619,7 +2619,16 @@ button,select{font:inherit}button{-webkit-tap-highlight-color:transparent}button
       toast('SpeakSharp installed.');
     });
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
+      let reloadingForUpdate = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (reloadingForUpdate) return;
+        reloadingForUpdate = true;
+        location.reload();
+      });
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(reg => {
+        reg.update().catch(() => {});
+        setInterval(() => reg.update().catch(() => {}), 60 * 60 * 1000);
+      }).catch(() => {});
     }
   }
   wire(); updateApiKeyButton(); renderHistory(); setPrompt();
